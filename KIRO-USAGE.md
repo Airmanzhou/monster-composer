@@ -49,10 +49,20 @@ specs rather than only in the code:
 
 The repository is designed to be opened in Kiro directly:
 
-- **Kiro IDE / CLI** — open the folder; Kiro picks up `.kiro/steering/` and `.kiro/specs/`
-  automatically. `node tools/verify.mjs` is the acceptance command.
-- **Kiro Web** (`app.kiro.dev`) — zero install. Sign in, open the repository, and the steering
-  and specs in the repo are read from the checkout. Note that Web sessions do not run
+- **Kiro CLI** — open the folder; Kiro picks up `.kiro/steering/` and `.kiro/specs/`
+  automatically. `node tools/verify.mjs` is the acceptance command. The CLI runs on the **free
+  Builder ID tier**, so the whole loop below needs no paid subscription:
+
+  ```
+  kiro-cli login --license free --social google --use-device-flow
+  kiro-cli chat "<task>" --no-interactive --trust-all-tools
+  ```
+
+- **Kiro IDE** — open the folder; the same steering and specs are picked up, with the IDE's
+  own diff and approval UI.
+- **Kiro Web** (`app.kiro.dev`) — zero install, but it **requires a paid subscription (Pro or
+  higher)**; the free tier cannot open Web sessions. Sign in, open the repository, and the
+  steering and specs in the repo are read from the checkout. Note that Web sessions do not run
   event-driven hooks.
 
 To work on the project in Kiro, ask for the spec to be followed rather than for code to be
@@ -61,6 +71,44 @@ written:
 > Read `.kiro/specs/monster-composer/requirements.md` and `design.md` first, then implement
 > task `T3.4` from `tasks.md`. Keep `tools/verify.mjs` green and write the observation into
 > `tasks.md` when you are done.
+
+## A verified session, not a described one
+
+The write-up above is the *design* of the loop. This is an actual run of it, recorded because a
+hackathon submission that only claims Kiro usage is worth less than one that shows it.
+
+**2026-11-04 — Kiro CLI 3.0.0, free Builder ID tier, model selection on `auto`.**
+
+The task handed to the CLI was deliberately bounded: read `requirements.md` and `design.md`, run
+the acceptance command, and append one dated entry to the *Manual verification notes* section of
+`tasks.md` — no source file, no spec other than `tasks.md`, no installs, no server.
+
+```
+kiro-cli chat "<bounded task>" --no-interactive --trust-all-tools
+```
+
+What Kiro actually did:
+
+1. Read `requirements.md` and `design.md`.
+2. Ran `node tools/verify.mjs` — output `Monster Composer — 13 checks passed`, exit code `0`.
+3. Mapped each of the 13 checks back to the requirement ids it covers (3.3, 3.2, 3.4, 1.4, 1.2,
+   1.7, 1.6, 3.6, 1.1, 1.5, 1.3) and appended that mapping, the exact command, the output and the
+   exit code to `tasks.md`.
+4. **Found a real defect in the spec**: `design.md` §6 enumerated 11 assertions while the verifier
+   was already running 13 — the two undocumented checks (organ-interface shape, organ-update
+   isolation) were missing from the design's test list. Kiro recorded it as a non-failing
+   documentation divergence and named which requirements the undocumented checks cover.
+5. Also listed the requirements that `verify.mjs` does *not* exercise (audio fallback, stitch
+   animation, graveyard, share hash, accessibility) and pointed at the manual browser notes that
+   cover them instead — so the note does not overstate what was verified.
+
+`design.md` was then corrected to list all 13 assertions and to say where the correction came
+from, so the divergence is fixed in the spec rather than only recorded in a note. The diff is in
+the repository history.
+
+That is the whole point of shipping `.kiro/` in the repository: the next agent — human or
+model — can pick the story up mid-flight, because the requirements, the design, the task list and
+the verification evidence are all in the repo.
 
 ## Tooling used
 

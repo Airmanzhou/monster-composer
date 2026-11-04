@@ -103,3 +103,25 @@ note is written here.
   (`heart 0.60 · lung 0.60 · voice 0.60`), not the live rates.
 - **T5.3** — Observed: SHARE set the URL hash to `#m=eyJvIjp7IkhFQVJUIjpbMC42LDAsMV0s…` and the
   status bar reported the link was copied.
+
+- **2026-11-04** — Automated verification run of `tools/verify.mjs` (req 7.1).
+  - Exact command run: `node tools/verify.mjs` (workspace root, PowerShell on Windows).
+  - Output: `Monster Composer — 13 checks passed` followed by 13 `ok` lines; exit code `0`.
+  - Requirement-id mapping for each of the 13 checks:
+    1. "circular distance wraps around the cycle" → req 3.3 (circular phase distance HEART↔LUNG and HEART↔VOICE).
+    2. "identical phases score 1" → req 3.3, 3.4.
+    3. "sync score is bounded and reaches 0 at the tolerance" → req 3.2, 3.3.
+    4. "identical phases give exactly 100 vitality" → req 3.4, 3.2.
+    5. "one out-of-phase pair drags vitality below 100" → req 3.4 (the `min` rule).
+    6. "vitality stays in [0, 100] over a randomised sweep" → req 3.2 (closed range).
+    7. "mutate keeps the offset within half a cycle and the amplitude within 0.7–1.3" → req 1.4 (phase offset within ±0.5 of period, amplitude within ±30% of nominal).
+    8. "advance moves the phase forward and wraps at 1" → req 1.2 (organs advanced from a shared clock).
+    9. "wrap keeps values inside the cycle exact" → req 1.7 (settle resolves to ≥4 decimal places / tolerance-edge precision).
+    10. "equal rates keep the organs locked together" → req 3.4, 1.2.
+    11. "an organ can be settled onto the heartbeat exactly" → req 1.6, 1.7, 3.6.
+    12. "every organ module exposes the shared interface" → req 1.1, 1.5.
+    13. "an organ update advances its own phase and nothing else" → req 1.2, 1.3, 1.5.
+  - Mismatches found between spec and implementation:
+    - Documentation divergence (non-failing): `design.md` §6 "Unit testing strategy" enumerates 11 assertions, but `tools/verify.mjs` actually executes 13 checks. The two extra checks (#12 organ-interface shape, #13 organ-update isolation) correspond to requirements 1.1/1.5 and 1.2/1.3/1.5, which the design's enumerated testing list does not mention. The implementation checks a superset of what the design documents; `verify.mjs` still exits 0, so no requirement is violated, but the design's check list is out of date relative to the verifier.
+    - No failing assertion: all 13 checks passed (exit 0), so no requirement covered by `verify.mjs` is violated by the current implementation.
+    - Out of scope for this run: requirements that require runtime/DOM verification — req 2.2 (single `requestAnimationFrame` loop), 2.3 (audio fallback), 3.1 (1200 ms stitch animation), 3.5 (6 s grace / 1.5 s death timing), 4.1–4.4 (graveyard), 5.1–5.3 (share hash), 6.1/6.2/6.3/6.4 (accessibility, 320 px, mute, speechSynthesis fallback) — are not exercised by `tools/verify.mjs` and remain covered by the manual browser notes recorded above, not by this automated check.

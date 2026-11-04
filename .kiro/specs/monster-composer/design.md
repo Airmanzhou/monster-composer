@@ -158,9 +158,16 @@ Malformed hashes are ignored and defaults are used (requirement 5.3).
     seconds.
 11. An organ can be settled onto another organ's phase exactly, and the pair then reports
     vitality 100.
+12. Every organ module exposes the shared interface shape (`id`, `label`, `params`, `update`,
+    `draw`, `describe`) — requirements 1.1 and 1.5.
+13. An organ update advances its own phase and touches nothing else — requirements 1.2, 1.3, 1.5.
 
 The script exits `0` on success and `1` on the first failed assertion, so it is usable both
 locally and as a Kiro `PostFileSave` hook command.
+
+Items 12 and 13 were added after the Kiro CLI verification session of 2026-11-04 (see
+`tasks.md` → *Manual verification notes*): the verifier already executed them, but this list
+was still describing the earlier 11-assertion version.
 
 ## 7. Non-goals
 
