@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Monster Composer — stitch a heart, a lung and a voice</title>
+    <meta
+      name="description"
+      content="Kiroween 2026, Frankenstein category. Stitch three mismatched organs into one living creature and keep them in phase."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Monster <span>Composer</span></h1>
+      <p class="tagline">Kiroween 2026 &middot; Frankenstein category</p>
+    </header>
+
+    <main>
+      <section class="stage" aria-labelledby="stage-heading">
+        <h2 id="stage-heading" class="visually-hidden">The creature</h2>
+
+        <canvas
+          id="creature"
+          width="600"
+          height="600"
+          role="img"
+          aria-label="Three organ rhythm rings around a stitched creature. The three markers line up when the organs are in phase."
+        ></canvas>
+
+        <div class="vitals">
+          <div
+            class="vital-meter"
+            role="meter"
+            id="vital-meter"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+            aria-label="Creature vitality"
+          >
+            <div class="vital-fill" id="vital-fill"></div>
+          </div>
+          <p class="vital-readout">
+            <span id="vital-value">0</span><span class="unit">vitality</span>
+          </p>
+          <p class="status" id="status" role="status" aria-live="polite">Ready to stitch.</p>
+        </div>
+
+        <div class="controls">
+          <button id="stitch" class="primary" type="button">STITCH</button>
+          <button id="share" type="button">SHARE</button>
+          <button id="mute" type="button" aria-pressed="false">MUTE</button>
+          <label class="vigor" for="vigor">VIGOR</label>
+          <input id="vigor" type="range" min="0.2" max="1.5" step="0.05" value="1" />
+        </div>
+      </section>
+
+      <section class="organs" aria-labelledby="organs-heading">
+        <h2 id="organs-heading">Organs</h2>
+        <p class="hint">
+          Every organ runs on its own clock. Chase the hollow marker — the heartbeat — with the
+          lung and the voice. The creature only stays alive while all three rhythms agree.
+        </p>
+        <div id="organ-cards" class="organ-grid"></div>
+      </section>
+
+      <section class="graveyard" aria-labelledby="graveyard-heading">
+        <h2 id="graveyard-heading">Graveyard</h2>
+        <form id="save-form" class="save-form">
+          <label class="visually-hidden" for="monster-name">Name your monster</label>
+          <input
+            id="monster-name"
+            name="name"
+            type="text"
+            placeholder="name your monster"
+            maxlength="40"
+            autocomplete="off"
+          />
+          <button id="save" type="submit" disabled>ARCHIVE</button>
+        </form>
+        <p class="hint" id="archive-hint">Archive unlocks when vitality reaches 100.</p>
+        <ul id="graveyard-list" class="graveyard-list"></ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Built with <a href="https://kiro.dev">Kiro</a> for
+        <a href="https://kiroween.devpost.com">Kiroween 2026</a>. No backend, no build step.
+      </p>
+    </footer>
+
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>

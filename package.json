@@ -1,0 +1,12 @@
+{
+  "name": "monster-composer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Monster Composer — stitch a heart, a lung and a voice into one living creature. Built for the Kiroween 2026 hackathon (Frankenstein category).",
+  "license": "MIT",
+  "scripts": {
+    "verify": "node tools/verify.mjs",
+    "start": "node tools/serve.mjs"
+  }
+}

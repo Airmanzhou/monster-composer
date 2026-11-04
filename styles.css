@@ -1,0 +1,374 @@
+:root {
+  --bg: #0b0d12;
+  --panel: #141821;
+  --panel-2: #1b202b;
+  --line: #2a3140;
+  --ink: #e7ecf5;
+  --muted: #8d99ae;
+  --heart: #ff5d73;
+  --lung: #4fd1c5;
+  --voice: #b794f6;
+  --accent: #7ee787;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  background: radial-gradient(1200px 700px at 50% -10%, #1a2130 0%, var(--bg) 60%);
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    "Noto Sans", sans-serif;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.topbar {
+  padding: 28px 16px 8px;
+  text-align: center;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 6vw, 2.6rem);
+  letter-spacing: 0.02em;
+  font-weight: 700;
+}
+
+.topbar h1 span {
+  color: var(--accent);
+}
+
+.tagline {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 12px 14px 48px;
+  display: grid;
+  gap: 18px;
+}
+
+section {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+h2 {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hint {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- stage ---------- */
+
+.stage {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+}
+
+#creature {
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  background: #0e1219;
+  border: 1px solid var(--line);
+}
+
+.vitals {
+  width: 100%;
+  max-width: 460px;
+  display: grid;
+  gap: 6px;
+}
+
+.vital-meter {
+  height: 14px;
+  border-radius: 999px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.vital-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--heart), var(--accent));
+  transition: width 120ms linear;
+}
+
+.vital-readout {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.vital-readout .unit {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-left: 6px;
+}
+
+.status {
+  margin: 0;
+  min-height: 1.5em;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.controls {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.controls .vigor {
+  margin-left: auto;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+button {
+  font: inherit;
+  color: var(--ink);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 9px 14px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  font-size: 0.82rem;
+  transition: background 120ms ease, border-color 120ms ease, transform 80ms ease;
+}
+
+button:hover:not(:disabled) {
+  background: #232a38;
+  border-color: #3b465a;
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #06170c;
+  font-weight: 700;
+}
+
+button.primary:hover:not(:disabled) {
+  background: #95ef9c;
+}
+
+button[aria-pressed="true"] {
+  border-color: var(--heart);
+  color: var(--heart);
+}
+
+input[type="range"] {
+  accent-color: var(--accent);
+  min-width: 120px;
+}
+
+/* ---------- organs ---------- */
+
+.organ-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.organ-card {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--organ-color);
+  border-radius: 11px;
+  padding: 12px;
+  display: grid;
+  gap: 9px;
+}
+
+.organ-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.organ-head h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  color: var(--organ-color);
+}
+
+.organ-head button {
+  padding: 4px 9px;
+  font-size: 0.68rem;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 4.6rem 1fr 3.6rem;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.field output {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+
+.field input[type="range"] {
+  min-width: 0;
+  width: 100%;
+}
+
+/* ---------- graveyard ---------- */
+
+.save-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.save-form input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: var(--ink);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 9px 12px;
+}
+
+.graveyard-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.graveyard-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 12px;
+}
+
+.graveyard-list .name {
+  font-weight: 600;
+}
+
+.graveyard-list .meta {
+  color: var(--muted);
+  font-size: 0.78rem;
+  flex: 1 1 160px;
+}
+
+.graveyard-list button {
+  padding: 5px 10px;
+  font-size: 0.72rem;
+}
+
+.empty {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+  padding: 0 16px 32px;
+}
+
+footer a {
+  color: var(--accent);
+}
+
+@media (max-width: 420px) {
+  .field {
+    grid-template-columns: 4.2rem 1fr 3.2rem;
+  }
+
+  .controls .vigor {
+    margin-left: 0;
+  }
+
+  .controls {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vital-fill {
+    transition: none;
+  }
+}
