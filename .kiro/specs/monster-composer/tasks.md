@@ -64,12 +64,24 @@ note is written here.
 - [x] **T6.2** `.kiro/specs/monster-composer/{requirements,design,tasks}.md` — *req 7.3 (evidence)*
 - [x] **T6.3** `.kiro/agents/surgeon.json` project agent — *req 7.3 (evidence)*
 - [x] **T6.4** `AGENTS.md` at the workspace root — *req 7.3 (evidence)*
-- [ ] **T6.5** Run the feature inside Kiro itself (spec → implementation) and record the
-  transcript in `KIRO-USAGE.md` — *the rules ask for a write-up on how Kiro was used*
-- [ ] **T6.6** Push to a **public** GitHub repository with `LICENSE` and the `.kiro/` folder
+- [x] **T6.6** Push to a **public** GitHub repository with `LICENSE` and the `.kiro/` folder
   committed and visible in the About section — *mandatory for a valid submission*
-- [ ] **T6.7** Deploy to GitHub Pages and record the public URL — *mandatory: a reachable app URL*
+  - *Observed:* public repo `github.com/Airmanzhou/monster-composer` (branch `main`, first commit
+    `ebc63ab`, 22 files including `.kiro/steering/*`, `.kiro/specs/monster-composer/*`,
+    `.kiro/agents/surgeon.json`, `AGENTS.md`, `KIRO-USAGE.md`, `LICENSE`; second commit adds
+    `.nojekyll`). MIT license visible in About.
+- [x] **T6.7** Deploy to GitHub Pages and record the public URL — *mandatory: a reachable app URL*
+  - *Observed:* Pages enabled (legacy build, branch `main`, path `/`); app reachable at
+    `https://airmanzhou.github.io/monster-composer/` (HTTP 200 after the first deploy finished).
 - [ ] **T6.8** Record a ≤3 minute public YouTube demo — *mandatory*
+  - *Status:* recorded locally (`video/monster-composer-demo.mp4`, 133 s, 1280x720) — still needs
+    upload to a **public** YouTube video and the URL pasted into the Devpost submission.
+- [ ] **T6.9** Run the project inside **Kiro CLI** (`kiro-cli`, installed at
+  `D:\kiro-cli\app\LocalApp\Kiro-Cli`) for a real Kiro-authored feature pass — *the rules state
+  that insufficient use of Kiro is grounds for disqualification, so this must be genuine Kiro
+  work, not a transcript written by hand*
+  - *Status:* awaiting the user running `kiro-cli` in this directory and letting Kiro author a
+    new spec end-to-end (see `KIRO-STARTER.md` for the one prompt to paste).
 
 ## Manual verification notes
 

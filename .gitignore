@@ -3,3 +3,7 @@ node_modules/
 Thumbs.db
 *.log
 npm-debug.log*
+
+# recording scratch files (raw webm + extracted frames), the published mp4 stays
+video/page@*.webm
+video/g*.jpg
