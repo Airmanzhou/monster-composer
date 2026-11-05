@@ -6,7 +6,7 @@
 ## 标题
 
 ```
-Monster Composer (Suture Lab) - stitch a heart, a lung and a voice into one living creature | Kiroween 2026
+Monster Composer (Suture Lab) - stitch a heart, a lung and a voice | Kiroween 2026
 ```
 
 ## 简介（直接粘）
@@ -61,6 +61,12 @@ https://github.com/Airmanzhou/monster-composer
 kiroween, kiroween2026, kiro, aws, kiro ide, spec driven development, javascript, canvas,
 web audio, creative coding, game, hackathon, ai, game jam
 ```
+
+## 已完成（2026-11-05）
+
+- 视频已上传并公开：https://www.youtube.com/watch?v=wejqyelpQZg
+- Devpost 项目已提交（SUBMITTED，5/5 步），公开页 https://devpost.com/software/monster-composer-suture-lab 已嵌入该视频
+- 注意：YouTube 标题上限 100 字符（上面的标题已按上限裁剪）
 
 ## 上传后要做的两件事
 

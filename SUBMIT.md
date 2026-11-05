@@ -1,40 +1,47 @@
-# 提交剩余的最后一步
+# 提交状态：已完成 ✅
 
-## 状态（2026-11-04 22:10 实测）
+## 结论
 
-Devpost 项目页 id **1281762**，slug `1281762-monster-composer-suture-lab`：
+Devpost 项目**已提交成功**，状态 `SUBMITTED`，5/5 步完成。
 
-| 步骤 | 状态 |
+| 项目 | 值 |
 | --- | --- |
-| Project overview（标题 / tagline） | ✅ 已填并落库 |
-| Project details（描述 4887 字符、标签、demo URL、缩略图） | ✅ 已填并落库 |
-| Additional info（国家 China、类目 Frankenstein、仓库 URL、demo URL、凭据说明、Kiro 使用说明 2805 字符） | ✅ 已填并落库 |
-| 项目缩略图（`software_photos/005/786/343`） | ✅ 已上传 |
-| **Demo video URL（`software[video_url]`）** | ❌ **空 —— 唯一缺项** |
+| 项目页（管理） | https://devpost.com/submit-to/31667-kiroween-2026/manage/submissions/1281762-monster-composer-suture-lab |
+| 项目页（公开） | https://devpost.com/software/monster-composer-suture-lab |
+| 演示视频 | https://www.youtube.com/watch?v=wejqyelpQZg（公开，频道 Zhou LiJun，2:14 ≤ 3 分钟 ✅） |
+| 视频标题 | Monster Composer (Suture Lab) - stitch a heart, a lung and a voice \| Kiroween 2026 |
+| 仓库 | https://github.com/Airmanzhou/monster-composer（public，MIT，含 /.kiro） |
+| 在线 Demo | https://airmanzhou.github.io/monster-composer/ |
 
-Devpost 当前提示原文：`Please complete required fields in Project details before submitting.`
-步骤进度：`3/5 steps done`。
+公开页已嵌入 YouTube iframe：`https://www.youtube.com/embed/wejqyelpQZg`（实测验证）。
 
-## 需要你做的（唯一一件）
+## 踩过的坑（下次别再犯）
 
-1. 用**你自己的 Chrome** 打开 <https://www.youtube.com/upload>，上传
-   `D:\立俊 DSH Harness工作档案\kiroween-2026\video\monster-composer-demo.mp4`
-   （1280x720 / H.264 / 133 秒 / 3.4 MB，已满足 ≤3 分钟）。
-   标题 / 简介 / 标签见 `video/YOUTUBE-UPLOAD.md`（简介可直接整段复制）。
-   自定义缩略图用 `video/thumbnail.jpg`。
-2. **可见性设为 Public**（默认"不公开"评委点不开）。
-3. 把视频链接发我，形如 `https://www.youtube.com/watch?v=XXXXXXXXXXX`。
+1. **YouTube 标题上限 100 字符**：超了 → 输入框红框 +「解决错误后才能保存」→ **保存按钮被禁用**，所有其他字段（标题/简介/缩略图）也一起不落库。改成 ≤100 字后一次全存。
+2. **Studio 上传向导不能点 step 跳步**（草稿态 badge-3 点了不跳），必须 `ytcp-button#next-button` 一步步走。
+3. **必须用真实点击**：`page.mouse.click()` 打在 `ytcp-button` 外壳上无效，要用 Playwright `locator.click()`（能穿 shadow DOM）。反之 `page.evaluate()` 找不到 shadow DOM 里的元素，只能做数据读取/直接 `.click()` DOM 节点。
+4. **ego 的 Page API 不是 Playwright**：没有 `locator()`/`getByRole()`，只有 `click(selector)`/`evaluate()`/`waitForSelector()` 等；`process.env` 在 ego nodejs 里读不到，脚本要传参必须硬编码或写文件。
+5. **Devpost 提交按钮不是 `input[name=commit]`**，而是 `#submission-finalization-form button[type=submit]`（文本「Submit project」）；条款勾选框是 `#participants_manage_finalization_accepts_terms`。
+6. **Devpost 表单是 React 受控组件**：直接改 DOM 值不落库，必须走原生 setter + `input`/`change` 事件 + `Save & continue`。
+7. **Edge 真实 profile 开不了 CDP**（Chromium 136+ 忽略默认 user-data-dir 的 `--remote-debugging-port`），克隆到 D 盘才可 CDP，但 app-bound v20 加密绑路径 → 克隆解不开 cookie。**最终解法：用克隆 profile D:\edge-cdp2 跑 Edge + CDP，Google 登录态直接在克隆里完成。**
 
-> ego 浏览器里 YouTube Studio 是空白页（SPA 不渲染），已验证不可用，所以这一步只能你本人做。
+## 剩余唯一事项
 
-## 我收到链接后一条命令搞定
+**Kiroween 4000 积分兑换**：申请表已提交，等 Didit 实名邮件 + 积分码（48 工作小时，先到先得不保证发码；兑换截止 2026-12-04 14:00 PT，积分 12/31 到期）。收到码后跑：
 
 ```bash
-cd "/d/立俊 DSH Harness工作档案/ego-kiroween" && timeout 280 ego-browser nodejs < submit.mjs "https://www.youtube.com/watch?v=XXXXXXXXXXX"
+cd "/d/立俊 DSH Harness工作档案/ego-kiroween" && timeout 200 ego-browser nodejs < redeem.mjs
 ```
 
-`submit.mjs` 会：填 `software[video_url]` → 点 Save & continue → 重新加载校验落库 →
-到 finalization 勾选条款 → 点 Submit → 回读最终状态。
+（脚本已备好并通过语法检查：以「Kiroupon successfully redeemed!」横幅 + app.kiro.dev/settings/account 的积分余额为准。）
 
-已实测通过的部分（无视频链接时跑过）：`save: "clicked BUTTON Save & continue"`，
-重载后 caption 与 description 仍在（`verify.caption` / `verify.descLen`）。
+## 关联脚本
+
+| 文件 | 作用 |
+| --- | --- |
+| `ego-kiroween/yt_publish.py` | 发布草稿：走完向导 → 公开范围选 PUBLIC → 保存 |
+| `ego-kiroween/yt_final_meta.py` | 改标题（≤100 字）/简介/缩略图并保存 |
+| `ego-kiroween/edge_relaunch.py` | 重启带 CDP 的 Edge 克隆实例（9229） |
+| `ego-kiroween/submit_final.mjs` | Devpost 填 video_url → Save → 勾条款 → Submit |
+| `ego-kiroween/submit_press2.mjs` | 只做 finalization 的勾选与提交 |
+| `ego-kiroween/yt_desc.txt` | YouTube 简介纯文本（2104 字符） |
